@@ -14,7 +14,7 @@
 - Search/filter customers in real time by name or company (case-insensitive)
 - Highlight the currently selected customer card with a distinct visual selection state
 - Persist the selected customer across page interactions within the same session
-- Pass the selected `Customer` object (or `id`) to a parent callback or shared state so downstream components can react
+- Expose an `onSelect` callback prop with signature `onSelect: (customer: Customer) => void` that is invoked when a card is clicked, passing the full `Customer` object to the parent
 - Show an empty state message when the search filter returns no results
 - Handle 100+ customer records efficiently without visible lag
 
@@ -31,7 +31,7 @@
   - Empty-state message centered within the grid area
 - **File structure:**
   - Component: `src/components/CustomerSelector.tsx`
-  - Props interface `CustomerSelectorProps` exported from the component file
+  - Props interface `CustomerSelectorProps` exported from the component file; must include `onSelect: (customer: Customer) => void`
   - PascalCase naming; child cards use the `CustomerCard` component from `src/components/CustomerCard.tsx`
 - **Data source:** `src/data/mock-customers.ts` — array of `Customer` objects; can be replaced with an async data prop without refactoring the component internals
 - **Security:** Search input treated as plain text; no eval or unsafe HTML rendering; TypeScript types enforce valid `Customer` shape
@@ -42,6 +42,7 @@
 - [ ] Clearing the search restores the full customer list
 - [ ] An empty-state message appears when no customers match the filter
 - [ ] Clicking a card marks it as selected with a visible highlight; only one card is selected at a time
+- [ ] Clicking a card invokes the `onSelect` callback with the correct `Customer` object
 - [ ] Selected customer state persists across filter changes and minor page interactions (e.g., scroll, re-render)
 - [ ] `CustomerSelectorProps` interface is defined and exported from the component file
 - [ ] Renders 100 customer records without noticeable frame drops or input lag
